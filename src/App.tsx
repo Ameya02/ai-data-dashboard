@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense, lazy, useEffect } from 'react';
+import './styles/app.scss';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { fetchData } from './redux/actions/dataResponseActions';
+import { useAppDispatch } from './hooks/hooks';
+import Loader from './components/Loader';
+
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const ResponseTimes = lazy(() => import('./pages/ResponseTimes'));
+const UsageStatistics = lazy(() => import('./pages/UsageStatistics'));
+const UserSatisfaction = lazy(() => import('./pages/UserSatisfaction'));
+
 
 function App() {
+
+  // Fetch data on component mount using useEffect and dispatch
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchData());  
+  }, [dispatch])
+  
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <Router>
+    <Suspense fallback={<Loader />}>
+    <Routes>
+      <Route path="/" element={<Dashboard/>} />
+      <Route path="/home" element={<Dashboard/>} />
+      <Route path="/response-times" element={<ResponseTimes/>} />
+      <Route path="/usage-statistics" element={<UsageStatistics/>} />
+      <Route path="/user-satisfaction" element={<UserSatisfaction/>} />
+    </Routes>
+    </Suspense>
+   </Router>
   );
 }
 
