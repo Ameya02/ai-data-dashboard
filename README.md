@@ -20,7 +20,7 @@ https://ai-data-dashboard.vercel.app/
 
 Clone the repository:
 ```
-git clone 
+git clone https://github.com/Ameya02/ai-data-dashboard
 ```
 Install the dependencies:
 ```
@@ -28,7 +28,7 @@ npm install
 ```
 Run the applications:
 ```
-npm run dev
+npm start
 ```
 ## Tech Stack
 
